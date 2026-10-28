@@ -1,0 +1,17 @@
+<settings-container tags="voice-input-settings-root">
+ <vertical id="voice-settings-content" horizontal-fit="Unconstrained" vertical-fit="PreferredSize" child-expand-height="false">
+  <dropdown-list-setting text="Microphone" value="SelectedMicrophone" options="Microphones" formatter="FormatMicrophone" bind-value="true" apply-on-change="true" interactable="~CanEdit" />
+  <dropdown-list-setting text="Maximum recording time" value="MaxRecordingSeconds" options="RecordingChoices" formatter="FormatSeconds" bind-value="true" apply-on-change="true" interactable="~CanEdit" />
+  <dropdown-list-setting text="Recognition timeout" value="RequestTimeoutSeconds" options="TimeoutChoices" formatter="FormatSeconds" bind-value="true" apply-on-change="true" interactable="~CanEdit" />
+  <horizontal spacing="2" child-control-height="true" child-expand-height="false" preferred-height="8">
+    <primary-button text="Test microphone" on-click="StartTest" interactable="~CanTest" font-size="3.2" preferred-height="8" />
+    <button text="Stop test" on-click="StopTest" active="~Testing" font-size="3.2" preferred-height="8" />
+  </horizontal>
+  <text text="~Meter" active="~Testing" font-size="3.2" rich-text="false" align="Center" preferred-height="6" color="#8BE0B5" />
+  <horizontal spacing="2" child-control-height="true" child-expand-height="false" preferred-height="8">
+    <primary-button text="Save" on-click="Save" interactable="~CanEdit" font-size="3.2" preferred-height="8" />
+    <button text="Reload configuration" on-click="Refresh" interactable="~CanReload" font-size="3.2" preferred-height="8" />
+  </horizontal>
+  <text text="~Status" active="~HasStatus" font-size="3.2" word-wrapping="true" rich-text="false" align="Left" preferred-height="14" color="#ffb080" />
+ </vertical>
+</settings-container>

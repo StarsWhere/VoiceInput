@@ -1,0 +1,443 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "ContractDocument",
+  "type": "object",
+  "properties": {
+    "configuration": {
+      "$ref": "#/definitions/Configuration"
+    },
+    "session": {
+      "$ref": "#/definitions/Session"
+    },
+    "baiduToken": {
+      "$ref": "#/definitions/BaiduTokenResponse"
+    },
+    "baiduRecognition": {
+      "$ref": "#/definitions/BaiduRecognitionResponse"
+    },
+    "tencentRecognition": {
+      "$ref": "#/definitions/TencentRecognitionResponse"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Provider": {
+      "type": "string",
+      "enum": [
+        "baidu",
+        "tencent"
+      ],
+      "x-labels": [
+        "百度",
+        "腾讯"
+      ]
+    },
+    "SessionState": {
+      "type": "string",
+      "enum": [
+        "Idle",
+        "Starting",
+        "Recording",
+        "Recognizing",
+        "Failed"
+      ],
+      "x-labels": [
+        "空闲",
+        "启动中",
+        "录音中",
+        "识别中",
+        "失败"
+      ]
+    },
+    "BaiduConfiguration": {
+      "type": "object",
+      "properties": {
+        "apiKey": {
+          "type": "string",
+          "default": ""
+        },
+        "secretKey": {
+          "type": "string",
+          "default": ""
+        },
+        "devPid": {
+          "type": "integer",
+          "default": 1537,
+          "minimum": 1
+        }
+      },
+      "required": [
+        "apiKey",
+        "secretKey",
+        "devPid"
+      ],
+      "additionalProperties": false
+    },
+    "TencentConfiguration": {
+      "type": "object",
+      "properties": {
+        "secretId": {
+          "type": "string",
+          "default": ""
+        },
+        "secretKey": {
+          "type": "string",
+          "default": ""
+        },
+        "engineModel": {
+          "type": "string",
+          "default": "16k_zh",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "sessionToken": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "secretId",
+        "secretKey",
+        "engineModel"
+      ],
+      "additionalProperties": false
+    },
+    "Configuration": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1,
+          "default": 1
+        },
+        "provider": {
+          "$ref": "#/definitions/Provider"
+        },
+        "microphone": {
+          "type": "string",
+          "default": ""
+        },
+        "maxRecordingSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 55,
+          "default": 30
+        },
+        "requestTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20,
+          "default": 20
+        },
+        "baidu": {
+          "$ref": "#/definitions/BaiduConfiguration"
+        },
+        "tencent": {
+          "$ref": "#/definitions/TencentConfiguration"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "provider",
+        "microphone",
+        "maxRecordingSeconds",
+        "requestTimeoutSeconds",
+        "baidu",
+        "tencent"
+      ],
+      "additionalProperties": false
+    },
+    "Session": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/definitions/SessionState"
+        },
+        "requestId": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "state",
+        "requestId"
+      ],
+      "additionalProperties": false
+    },
+    "BaiduTokenRequest": {
+      "type": "object",
+      "properties": {
+        "grant_type": {
+          "type": "string",
+          "enum": [
+            "client_credentials"
+          ]
+        },
+        "client_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "client_secret": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "grant_type",
+        "client_id",
+        "client_secret"
+      ],
+      "additionalProperties": false
+    },
+    "BaiduRecognitionRequest": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": [
+            "pcm"
+          ]
+        },
+        "rate": {
+          "type": "integer",
+          "enum": [
+            16000
+          ]
+        },
+        "channel": {
+          "type": "integer",
+          "enum": [
+            1
+          ]
+        },
+        "cuid": {
+          "type": "string",
+          "minLength": 1
+        },
+        "token": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dev_pid": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "speech": {
+          "type": "string",
+          "minLength": 1
+        },
+        "len": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "format",
+        "rate",
+        "channel",
+        "cuid",
+        "token",
+        "dev_pid",
+        "speech",
+        "len"
+      ],
+      "additionalProperties": false
+    },
+    "TencentRecognitionRequest": {
+      "type": "object",
+      "properties": {
+        "EngSerViceType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "SourceType": {
+          "type": "integer",
+          "enum": [
+            1
+          ]
+        },
+        "VoiceFormat": {
+          "type": "string",
+          "enum": [
+            "pcm"
+          ]
+        },
+        "Data": {
+          "type": "string",
+          "minLength": 1
+        },
+        "DataLen": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "EngSerViceType",
+        "SourceType",
+        "VoiceFormat",
+        "Data",
+        "DataLen"
+      ],
+      "additionalProperties": false
+    },
+    "TencentRecognitionHeaders": {
+      "type": "object",
+      "properties": {
+        "Content-Type": {
+          "type": "string",
+          "const": "application/json; charset=utf-8"
+        },
+        "Host": {
+          "type": "string",
+          "minLength": 1
+        },
+        "X-TC-Action": {
+          "type": "string",
+          "const": "SentenceRecognition"
+        },
+        "X-TC-Version": {
+          "type": "string",
+          "const": "2019-06-14"
+        },
+        "X-TC-Timestamp": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "Authorization": {
+          "type": "string",
+          "minLength": 1
+        },
+        "X-TC-Token": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "Content-Type",
+        "Host",
+        "X-TC-Action",
+        "X-TC-Version",
+        "X-TC-Timestamp",
+        "Authorization"
+      ],
+      "additionalProperties": false
+    },
+    "BaiduTokenResponse": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expires_in": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "error": {
+          "type": "string",
+          "default": ""
+        },
+        "error_description": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "additionalProperties": true
+    },
+    "BaiduRecognitionResponse": {
+      "type": "object",
+      "properties": {
+        "err_no": {
+          "type": "integer"
+        },
+        "err_msg": {
+          "type": "string",
+          "default": ""
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sn": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "err_no"
+      ],
+      "additionalProperties": true
+    },
+    "TencentError": {
+      "type": "object",
+      "properties": {
+        "Code": {
+          "type": "string",
+          "default": ""
+        },
+        "Message": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "Code",
+        "Message"
+      ],
+      "additionalProperties": true
+    },
+    "TencentResponse": {
+      "type": "object",
+      "properties": {
+        "RequestId": {
+          "type": "string",
+          "default": ""
+        },
+        "Result": {
+          "type": "string",
+          "default": ""
+        },
+        "Error": {
+          "$ref": "#/definitions/TencentError"
+        }
+      },
+      "required": [
+        "RequestId"
+      ],
+      "additionalProperties": true
+    },
+    "TencentRecognitionResponse": {
+      "type": "object",
+      "properties": {
+        "Response": {
+          "$ref": "#/definitions/TencentResponse"
+        }
+      },
+      "required": [
+        "Response"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "x-defaultConfiguration": {
+    "schemaVersion": 1,
+    "provider": "tencent",
+    "microphone": "",
+    "maxRecordingSeconds": 30,
+    "requestTimeoutSeconds": 20,
+    "baidu": {
+      "apiKey": "",
+      "secretKey": "",
+      "devPid": 1537
+    },
+    "tencent": {
+      "secretId": "",
+      "secretKey": "",
+      "engineModel": "16k_zh",
+      "sessionToken": ""
+    }
+  }
+}

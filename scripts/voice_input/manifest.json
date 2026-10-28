@@ -1,0 +1,18 @@
+{
+  "id": "VoiceInput",
+  "name": "Voice Input",
+  "author": "StarsWhere",
+  "version": "0.1.1",
+  "gameVersion": "1.45.2",
+  "description": "Microphone dictation beside native and BSML keyboards, with Tencent Cloud and Baidu recognition.",
+  "dependsOn": {
+    "BSIPA": "^4.3.7",
+    "BeatSaberMarkupLanguage": "^1.14.1",
+    "SiraUtil": "^3.3.1",
+    "LocalModUI": "^0.1.0"
+  },
+  "links": {
+    "project-source": "https://github.com/StarsWhere/VoiceInput",
+    "project-home": "https://github.com/StarsWhere/VoiceInput#readme"
+  }
+}

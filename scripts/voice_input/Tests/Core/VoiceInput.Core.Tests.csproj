@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net472;net8.0</TargetFrameworks>
+    <LangVersion>12</LangVersion>
+    <PlatformTarget>x64</PlatformTarget>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableFrameworkPathOverride>true</EnableFrameworkPathOverride>
+    <GameRoot Condition="'$(GameRoot)' == ''">$(BEAT_SABER_DIR)</GameRoot>
+    <FrameworkPathOverride Condition="'$(TargetFramework)' == 'net472'">$(GameRoot)\Beat Saber_Data\Managed</FrameworkPathOverride>
+    <ContractGeneratedDirectory Condition="'$(ContractGeneratedDirectory)' == ''">$(RepoRoot)\.tmp\voice-input\build\generated</ContractGeneratedDirectory>
+    <AssemblyName>VoiceInput.Core.Tests</AssemblyName>
+    <RootNamespace>VoiceInput.Core.Tests</RootNamespace>
+    <OutputType>Exe</OutputType>
+    <OutputPath Condition="'$(OutputPath)' == ''">$(RepoRoot)\.tmp\voice-input\build\tests\bin\$(TargetFramework)\</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">$(RepoRoot)\.tmp\voice-input\build\tests\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath Condition="'$(IntermediateOutputPath)' == ''">$(BaseIntermediateOutputPath)$(TargetFramework)\$(Configuration)\</IntermediateOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Deterministic>true</Deterministic>
+    <NoWarn>$(NoWarn);NU1701;CS0618</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Core\*.cs" />
+    <Compile Include="$(ContractGeneratedDirectory)\ContractDocument.cs" Condition="Exists('$(ContractGeneratedDirectory)\ContractDocument.cs')" />
+    <Compile Include="$(SharedRoot)/scripts/shared_http_contracts/JsonContractRegistry.cs" Condition="Exists('$(SharedRoot)/scripts/shared_http_contracts/JsonContractRegistry.cs')" />
+    <Compile Include="CoreTests.cs" />
+    <Compile Include="Program.cs" />
+    <EmbeddedResource Include="..\..\Contracts\contracts.schema.json">
+      <LogicalName>VoiceInput.Contracts.schema.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Contracts\endpoints.json">
+      <LogicalName>VoiceInput.Contracts.endpoints.json</LogicalName>
+    </EmbeddedResource>
+    <Reference Include="Newtonsoft.Json" Condition="'$(TargetFramework)' == 'net472'">
+      <HintPath>$(GameRoot)\Libs\Newtonsoft.Json.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" Condition="'$(TargetFramework)' == 'net472'">
+      <HintPath>$(GameRoot)\Beat Saber_Data\Managed\System.Net.Http.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net472" Version="1.0.3" PrivateAssets="all" Condition="'$(TargetFramework)' == 'net472'" />
+    <PackageReference Include="NJsonSchema" Version="11.6.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" Condition="'$(TargetFramework)' == 'net8.0'" />
+  </ItemGroup>
+</Project>

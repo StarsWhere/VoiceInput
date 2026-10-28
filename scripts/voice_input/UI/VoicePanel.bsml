@@ -1,0 +1,8 @@
+<vertical preferred-width="38" pad="2" spacing="1" child-expand-height="false" bg="round-rect-panel">
+  <text id="status" text="语音输入" font-size="3.2" align="Center" preferred-height="17" word-wrapping="true" rich-text="false" overflow-mode="Overflow" />
+  <text id="timer" text="00:00 / 00:30" font-size="3.2" align="Center" preferred-height="5" active="false" />
+  <horizontal id="meter" preferred-height="3" active="false" />
+  <loading id="busy" preferred-width="5" preferred-height="5" active="false" />
+  <primary-button id="record" text="开始录音" on-click="Toggle" font-size="3.2" preferred-width="34" preferred-height="8" />
+  <button id="cancel" text="取消" on-click="Cancel" font-size="3.2" preferred-width="34" preferred-height="8" active="false" />
+</vertical>

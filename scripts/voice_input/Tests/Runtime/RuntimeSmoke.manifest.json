@@ -1,0 +1,1 @@
+{"id":"VoiceInput.RuntimeSmoke","name":"VoiceInput Runtime Checks","author":"Local","description":"Finite VoiceInput native and BSML keyboard integration checks","version":"1.0.0","gameVersion":"1.45.2","dependsOn":{"BSIPA":"^4.3.5","VoiceInput":"*"}}

@@ -1,0 +1,38 @@
+{
+  "services": {
+    "baiduAuth": "https://aip.baidubce.com/",
+    "baiduSpeech": "https://vop.baidu.com/",
+    "tencentSpeech": "https://asr.tencentcloudapi.com/"
+  },
+  "endpoints": [
+    {
+      "name": "baiduToken",
+      "method": "POST",
+      "service": "baiduAuth",
+      "path": "oauth/2.0/token",
+      "request": "BaiduTokenRequest",
+      "response": "BaiduTokenResponse",
+      "encoding": "form"
+    },
+    {
+      "name": "baiduRecognize",
+      "method": "POST",
+      "service": "baiduSpeech",
+      "path": "server_api",
+      "request": "BaiduRecognitionRequest",
+      "response": "BaiduRecognitionResponse",
+      "encoding": "json"
+    },
+    {
+      "name": "tencentRecognize",
+      "method": "POST",
+      "service": "tencentSpeech",
+      "path": "/",
+      "request": "TencentRecognitionRequest",
+      "response": "TencentRecognitionResponse",
+      "headers": "TencentRecognitionHeaders",
+      "signingService": "asr",
+      "encoding": "json"
+    }
+  ]
+}
