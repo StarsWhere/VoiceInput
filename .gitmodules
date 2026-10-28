@@ -1,0 +1,3 @@
+[submodule "vendor/LocalModUI"]
+	path = vendor/LocalModUI
+	url = https://github.com/StarsWhere/LocalModUI.git
