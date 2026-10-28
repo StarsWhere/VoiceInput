@@ -41,7 +41,7 @@ $pluginOutput = Join-Path $OutputDirectory 'Plugins'
 $libOutput = Join-Path $OutputDirectory 'Libs'
 foreach ($directory in @($pluginOutput, $libOutput)) { [IO.Directory]::CreateDirectory($directory) | Out-Null }
 foreach ($name in @('VoiceInput.dll', 'VoiceInput.pdb')) { Copy-Item -LiteralPath (Join-Path $bin $name) -Destination (Join-Path $pluginOutput $name) -Force }
-# Package the resolved NuGet runtime closure, while deferring to assemblies
+# Package the NJsonSchema and Newtonsoft.Json runtime closures, deferring to assemblies
 # already supplied by the game itself. The assets file avoids copying stale or
 # unrelated DLLs that might remain in a reused build directory.
 $assetsPath = Join-Path $obj 'project.assets.json'
@@ -49,16 +49,34 @@ if (!(Test-Path -LiteralPath $assetsPath -PathType Leaf)) { throw "NuGet assets 
 $assets = Get-Content -LiteralPath $assetsPath -Raw | ConvertFrom-Json
 $target = $assets.targets.PSObject.Properties['.NETFramework,Version=v4.7.2']
 if (!$target) { throw 'The NuGet assets file has no net472 target.' }
+$packages = [Collections.Generic.Dictionary[string,object]]::new([StringComparer]::OrdinalIgnoreCase)
+foreach ($entry in $target.Value.PSObject.Properties) {
+    $separator = $entry.Name.LastIndexOf('/')
+    if ($separator -lt 1) { throw "Invalid NuGet target entry: $($entry.Name)" }
+    $packages[$entry.Name.Substring(0, $separator)] = $entry.Value
+}
+$pending = [Collections.Generic.Queue[string]]::new()
+$pending.Enqueue('NJsonSchema')
+$pending.Enqueue('Newtonsoft.Json')
+$visited = [Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
 $runtimeNames = [Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
-foreach ($library in $target.Value.PSObject.Properties) {
-    $runtime = $library.Value.PSObject.Properties['runtime']
+while ($pending.Count -gt 0) {
+    $packageName = $pending.Dequeue()
+    if (!$visited.Add($packageName)) { continue }
+    if (!$packages.ContainsKey($packageName)) { throw "NuGet dependency is missing from the assets target: $packageName" }
+    $library = $packages[$packageName]
+    $dependencies = $library.PSObject.Properties['dependencies']
+    if ($dependencies) {
+        foreach ($dependency in $dependencies.Value.PSObject.Properties) { $pending.Enqueue($dependency.Name) }
+    }
+    $runtime = $library.PSObject.Properties['runtime']
     if ($runtime) {
         foreach ($asset in $runtime.Value.PSObject.Properties) {
             $name = [IO.Path]::GetFileName($asset.Name.Replace('/', [IO.Path]::DirectorySeparatorChar))
             if ($name.EndsWith('.dll', [StringComparison]::OrdinalIgnoreCase)) { [void]$runtimeNames.Add($name) }
         }
     }
-    $runtimeTargets = $library.Value.PSObject.Properties['runtimeTargets']
+    $runtimeTargets = $library.PSObject.Properties['runtimeTargets']
     if ($runtimeTargets) {
         foreach ($asset in $runtimeTargets.Value.PSObject.Properties) {
             if ($asset.Value.assetType -ne 'runtime') { continue }
