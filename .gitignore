@@ -1,0 +1,40 @@
+# Local build inputs, outputs and developer settings
+/.tmp/
+/releases/
+**/bin/
+**/obj/
+**/__pycache__/
+*.py[cod]
+/.vs/
+/.idea/
+*.user
+*.suo
+/.env
+/.env.*
+!/.env.example
+
+# Game installation, user content and private configuration
+/Beat Saber_Data/
+/MonoBleedingEdge/
+/DLC/
+/IPA/
+/Plugins/
+/Libs/
+/UserData/
+/Logs/
+/Playlists/
+/CustomAvatars/
+/CustomSabers/
+/outputs/
+*.dll
+*.exe
+*.pdb
+*.zip
+*.7z
+*.log
+*.flac
+*.mp3
+*.wav
+*.ogg
+*.avatar
+*.saber
