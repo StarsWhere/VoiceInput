@@ -1,0 +1,82 @@
+VoiceInput third-party notices
+
+The root LICENSE applies to original VoiceInput code only. Third-party
+components retain their own copyright and license terms. The complete texts
+listed below are distributed in licenses/ and must be retained when applicable
+components are redistributed. Components referenced from the game installation
+are not relicensed by this project.
+
+NJsonSchema 11.6.1 and NJsonSchema.Annotations 11.6.1
+License: MIT; complete text: licenses/NJsonSchema.txt
+Copyright (c) 2016 Rico Suter (upstream license).
+Package copyright: Copyright (c) Rico Suter, 2025.
+Source: https://github.com/RicoSuter/NJsonSchema
+Package source revision: ac2ba4ab9faaea3fb5adff784b99d73d70f6bdb1
+Packages: https://www.nuget.org/packages/NJsonSchema/11.6.1
+          https://www.nuget.org/packages/NJsonSchema.Annotations/11.6.1
+
+Namotion.Reflection 3.5.0
+License: MIT; complete text: licenses/Namotion.Reflection.txt
+Copyright (c) 2019 Rico Suter (upstream license).
+Package copyright: Copyright (c) Rico Suter, 2025.
+Source: https://github.com/RicoSuter/Namotion.Reflection
+Package source revision: c081f357e6102c9b06be32411d2749672e3a96a8
+Package: https://www.nuget.org/packages/Namotion.Reflection/3.5.0
+
+Newtonsoft.Json 13.0.3
+License: MIT; complete text: licenses/Newtonsoft.Json.txt
+Copyright (c) 2007 James Newton-King (package license).
+Package copyright: Copyright (c) James Newton-King 2008.
+Source: https://github.com/JamesNK/Newtonsoft.Json
+Package source revision: 0a2e291c0d9c0c7675d445703e51750363a549ef
+Package: https://www.nuget.org/packages/Newtonsoft.Json/13.0.3
+
+Microsoft .NET runtime libraries
+License: MIT; complete text: licenses/Microsoft-dotnet-MIT.txt
+Copyright (c) .NET Foundation and Contributors. All rights reserved.
+Package copyright: (c) Microsoft Corporation. All rights reserved.
+The original package third-party notices are retained in:
+  licenses/dotnet-runtime-9.0.9-THIRD-PARTY-NOTICES.txt
+  licenses/dotnet-runtime-6.0.0-THIRD-PARTY-NOTICES.txt
+  licenses/dotnet-corefx-THIRD-PARTY-NOTICES.txt
+
+The following libraries use the runtime 9.0.9 notices:
+  System.Text.Json 9.0.9
+  System.Text.Encodings.Web 9.0.9
+  System.IO.Pipelines 9.0.9
+  Microsoft.Bcl.AsyncInterfaces 9.0.9
+Source: https://github.com/dotnet/runtime
+Package source revision: 893c2ebbd49952ca49e93298148af2d95a61a0a4
+
+The following library uses the runtime 6.0.0 notices:
+  System.Runtime.CompilerServices.Unsafe 6.0.0
+Source: https://github.com/dotnet/runtime
+Package source revision: 4822e3c3aa77eb82b2fb33c9321f923cf11ddde6
+
+The following libraries use the corefx notices:
+  System.Buffers 4.5.1
+  System.Memory 4.5.5
+  System.Numerics.Vectors 4.5.0
+  System.Threading.Tasks.Extensions 4.5.4
+  System.ValueTuple 4.5.0
+Source: https://github.com/dotnet/corefx
+
+Each exact package can be obtained from:
+  https://www.nuget.org/packages/<package-name>/<version>
+
+External dependencies and build tools
+
+BSIPA, Harmony, BeatSaberMarkupLanguage, SiraUtil, SongCore, BetterSongList,
+CustomJSONData, Counters+ and Camera2 are external references supplied by the
+user's compatible game installation. Their binaries and source are not included
+in these mod packages. Their original licenses continue to apply. Unity and
+Beat Saber assemblies and the system Segoe UI Symbol font are read from the
+local installation and are not redistributed.
+
+NuGet downloads build-only tools and reference assemblies under their own
+package terms, including BepInEx.AssemblyPublicizer.MSBuild 0.4.2 and
+Microsoft.NETFramework.ReferenceAssemblies.net472 1.0.3. These tools and
+reference assemblies are not included in the runtime mod packages.
+
+SharedHttpContracts is an original LocalModUI component covered by its MIT
+license.
